@@ -55,6 +55,8 @@ WORKDIR /app
 RUN cabal update
 
 FROM buster-pandoc-haskell AS buster-pandoc-build
+ARG pandoc_commit=master
+ARG pandoc_citeproc_commit=master
 
 # Ensure artifacts folder exists
 WORKDIR /artifacts
@@ -62,8 +64,12 @@ WORKDIR /artifacts
 WORKDIR /app
 
 # get sources
-RUN git clone --depth 1 https://github.com/jgm/pandoc
-RUN git clone --depth 1 https://github.com/jgm/pandoc-citeproc
+RUN git clone --branch=$pandoc_commit \
+              --depth=1 --quiet \
+              https://github.com/jgm/pandoc
+RUN git clone --branch=$pandoc_citeproc_commit \
+              --depth=1 --quiet \
+              https://github.com/jgm/pandoc-citeproc
 
 # build pandoc
 WORKDIR /app/pandoc
@@ -87,14 +93,14 @@ WORKDIR /app/pandoc
 RUN linux/make_deb.sh
 
 FROM debian:buster-slim AS buster-slim-pandoc
+LABEL maintainer='Albert Krewinkel <albert+pandoc@zeitkraut.de>'
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBIAN_PRIORITY critical
-
 # We are not using the system-wide installed Lua, allow HsLua to find
 # Debian Lua libraries.
-ENV LUA_PATH "/usr/share/lua/5.3/?.lua;??"
-ENV LUA_CPATH "/usr/lib/x86_64-linux-gnu/lua/5.3/?.so;??"
+ENV LUA_PATH "/usr/share/lua/5.3/?.lua;;"
+ENV LUA_CPATH "/usr/lib/x86_64-linux-gnu/lua/5.3/?.so;;"
 
 COPY --from=buster-pandoc-build \
   /artifacts/pandoc /artifacts/pandoc-citeproc \
