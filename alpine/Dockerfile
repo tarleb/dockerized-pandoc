@@ -54,3 +54,5 @@ RUN apk update \
   && apk add \
          gmp \
          libffi
+
+ENTRYPOINT ["pandoc"]

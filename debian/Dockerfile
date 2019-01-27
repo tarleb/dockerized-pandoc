@@ -116,3 +116,5 @@ RUN apt-get -q --no-allow-insecure-repositories update \
        libyaml-0-2 \
        zlib1g \
   && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["pandoc"]
