@@ -103,6 +103,7 @@ COPY --from=buster-pandoc-build \
 RUN apt-get -q --no-allow-insecure-repositories update \
   && apt-get install --assume-yes --no-install-recommends \
        libatomic1 \
+       libgmp10 \
        libbibutils6 \
        libicu63 \
        libpcre3 \
