@@ -55,4 +55,6 @@ RUN apk update \
          gmp \
          libffi
 
+WORKDIR /data
+VOLUME ["/data"]
 ENTRYPOINT ["pandoc"]

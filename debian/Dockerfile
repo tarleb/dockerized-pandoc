@@ -117,4 +117,6 @@ RUN apt-get -q --no-allow-insecure-repositories update \
        zlib1g \
   && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /data
+VOLUME ["/data"]
 ENTRYPOINT ["pandoc"]
