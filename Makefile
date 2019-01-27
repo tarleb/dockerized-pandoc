@@ -15,6 +15,13 @@ build-debian:
 	    --build-arg pandoc_citeproc_commit=$(PANDOC_CITEPROC_COMMIT) \
 	    debian
 
+build-alpine:
+	docker build \
+	    --tag tarleb/alpine-pandoc:$(PANDOC_VERSION) \
+	    --build-arg pandoc_commit=$(PANDOC_COMMIT) \
+	    --build-arg pandoc_citeproc_commit=$(PANDOC_CITEPROC_COMMIT) \
+	    alpine
+
 show-args:
 	@printf "PANDOC_VERSION (i.e. image version tag): %s\n" $(PANDOC_VERSION)
 	@printf "pandoc_commit=%s\n" $(PANDOC_COMMIT)
