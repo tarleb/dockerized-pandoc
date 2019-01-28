@@ -1,6 +1,6 @@
 PANDOC_VERSION ?= dev
 
-ifeq ($PANDOC_VERSION,dev)
+ifeq ($(PANDOC_VERSION),dev)
 PANDOC_COMMIT          ?= master
 PANDOC_CITEPROC_COMMIT ?= master
 else
